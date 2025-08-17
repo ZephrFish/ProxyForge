@@ -11,10 +11,7 @@ import logging
 import tldextract
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Any
-import subprocess
-import configparser
-import os
+from typing import Dict, List, Optional
 import sys
 
 # Add parent directory to path for config import

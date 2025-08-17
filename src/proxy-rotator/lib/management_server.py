@@ -9,10 +9,9 @@ import json
 import logging
 from aiohttp import web
 from pathlib import Path
-import subprocess
 import sys
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict
 
 # Add parent directory to path for config import
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -30,7 +29,7 @@ except ImportError:
 
 from api_proxy_manager import APIProxyManager
 from local_proxy import SimpleHTTPProxy
-from validators import validate_url, validate_region, validate_api_id, ValidationError
+from validators import validate_url, validate_region, ValidationError
 from errors import error_response, handle_aws_error, ProxyRotatorError
 
 logging.basicConfig(level=getattr(logging, LOG_LEVEL))

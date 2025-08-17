@@ -79,15 +79,15 @@ class ProxyManager {
     const result = await this.localProxy.checkConnection();
     
     if (result.connected) {
-      console.log('[Local Proxy] Connected successfully');
+      // Local proxy connected
       
       // Load available gateways
       const gateways = await this.localProxy.listGateways();
       if (gateways.success) {
-        console.log(`[Local Proxy] Found ${gateways.gateways.length} AWS API Gateways`);
+        // Found AWS API Gateways
       }
     } else {
-      console.log('[Local Proxy] Not connected:', result.message);
+      // Local proxy not connected
     }
     
     return result;
@@ -212,7 +212,7 @@ class ProxyManager {
       value: config,
       scope: 'regular'
     }, () => {
-      console.log('Proxy updated:', this.getCurrentProxy());
+      // Proxy updated
     });
   }
 
@@ -338,12 +338,12 @@ class ProxyManager {
         }
         
         // Add tracking
-        console.log(`[API Gateway] Request: ${request.method} ${request.url}`);
+        // API Gateway request
       });
 
       gateway.addResponseInterceptor(async (response) => {
         // Log response
-        console.log(`[API Gateway] Response: ${response.status} in ${response.latency}ms`);
+        // API Gateway response
         
         // Update stats
         this.stats.totalRequests++;
@@ -585,7 +585,7 @@ class ProxyManager {
           this.createAPIGatewayForURL(url);
         }
         
-        console.log(`[Auto-Rotate] Rotated proxy for ${domain}`);
+        // Auto-rotated proxy
       }
     } catch (error) {
       console.error('[Auto-Rotate] Error handling URL change:', error);
@@ -906,4 +906,4 @@ chrome.webRequest.onAuthRequired.addListener(
   ['asyncBlocking']
 );
 
-console.log('ProxyForge background service initialized');
+// ProxyForge background service initialized

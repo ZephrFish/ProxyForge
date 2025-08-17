@@ -213,5 +213,5 @@
     }).catch(() => {});
   });
 
-  console.log('ProxyForge content script loaded');
+  // Content script loaded
 })();

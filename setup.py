@@ -38,11 +38,11 @@ def check_requirements():
             missing.append(tool)
     
     if missing:
-        print(f"\n❌ Missing required tools: {', '.join(missing)}")
+        print(f"\n[ERROR] Missing required tools: {', '.join(missing)}")
         print("\nPlease install the missing tools and run setup again.")
         return False
     
-    print("✅ All requirements met")
+    print("[OK] All requirements met")
     return True
 
 def setup_proxy_rotator():

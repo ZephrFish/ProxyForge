@@ -8,7 +8,6 @@ import asyncio
 import aiohttp
 from aiohttp import web
 import logging
-import random
 import json
 from pathlib import Path
 from urllib.parse import urlparse
