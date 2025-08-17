@@ -1,0 +1,34 @@
+{
+  "name": "proxyforge",
+  "version": "1.0.0",
+  "description": "Browser-controlled AWS proxy rotation solution",
+  "main": "index.js",
+  "directories": {
+    "test": "extension/tests"
+  },
+  "scripts": {
+    "test": "cd extension/tests && npm test",
+    "install-deps": "cd extension/tests && npm install",
+    "start-proxy": "cd proxy-rotator && ./proxy-rotator server",
+    "create-gateway": "cd proxy-rotator && ./proxy-rotator create --url https://httpbin.org",
+    "list-gateways": "cd proxy-rotator && ./proxy-rotator list",
+    "clean": "cd proxy-rotator && ./proxy-rotator delete --all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/proxyforge.git"
+  },
+  "keywords": [
+    "proxy",
+    "aws",
+    "api-gateway",
+    "chrome-extension",
+    "ip-rotation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/proxyforge/issues"
+  },
+  "homepage": "https://github.com/yourusername/proxyforge#readme"
+}

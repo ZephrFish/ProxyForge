@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Extension Icons</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    .icon-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      background: white;
+    }
+    button {
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button:hover {
+      background: #764ba2;
+    }
+  </style>
+</head>
+<body>
+  <h1>ProxyForge Icon Generator</h1>
+  <p>This page generates the required icons for the extension. Right-click each canvas and save as PNG with the appropriate filename.</p>
+  
+  <div class="icon-container">
+    <div>
+      <h3>icon-16.png</h3>
+      <canvas id="icon16" width="16" height="16"></canvas>
+    </div>
+    <div>
+      <h3>icon-48.png</h3>
+      <canvas id="icon48" width="48" height="48"></canvas>
+    </div>
+    <div>
+      <h3>icon-128.png</h3>
+      <canvas id="icon128" width="128" height="128"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function drawIcon(canvas) {
+      const ctx = canvas.getContext('2d');
+      const size = canvas.width;
+      
+      // Create gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      
+      // Draw rounded rectangle background
+      const radius = size * 0.2;
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(size - radius, 0);
+      ctx.quadraticCurveTo(size, 0, size, radius);
+      ctx.lineTo(size, size - radius);
+      ctx.quadraticCurveTo(size, size, size - radius, size);
+      ctx.lineTo(radius, size);
+      ctx.quadraticCurveTo(0, size, 0, size - radius);
+      ctx.lineTo(0, radius);
+      ctx.quadraticCurveTo(0, 0, radius, 0);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      
+      // Draw "PF" text
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      
+      // Adjust font size based on canvas size
+      const fontSize = size * 0.4;
+      ctx.font = `bold ${fontSize}px Arial`;
+      
+      // Draw text
+      ctx.fillText('PF', size / 2, size / 2);
+      
+      // Add subtle network nodes effect
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.lineWidth = size * 0.02;
+      
+      // Draw connection lines
+      const nodePositions = [
+        { x: size * 0.2, y: size * 0.2 },
+        { x: size * 0.8, y: size * 0.2 },
+        { x: size * 0.2, y: size * 0.8 },
+        { x: size * 0.8, y: size * 0.8 }
+      ];
+      
+      // Draw small dots at corners
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      nodePositions.forEach(pos => {
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, size * 0.03, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    // Generate all icons
+    drawIcon(document.getElementById('icon16'));
+    drawIcon(document.getElementById('icon48'));
+    drawIcon(document.getElementById('icon128'));
+  </script>
+</body>
+</html>

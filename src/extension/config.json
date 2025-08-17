@@ -1,0 +1,56 @@
+{
+  "defaultProxies": [
+    {
+      "host": "proxy1.example.com",
+      "port": 8080,
+      "type": "http",
+      "username": "",
+      "password": ""
+    },
+    {
+      "host": "proxy2.example.com",
+      "port": 8080,
+      "type": "http",
+      "username": "",
+      "password": ""
+    },
+    {
+      "host": "proxy3.example.com",
+      "port": 1080,
+      "type": "socks5",
+      "username": "",
+      "password": ""
+    }
+  ],
+  "apiGatewayEndpoints": [
+    {
+      "name": "Gateway 1",
+      "url": "https://api-id-1.execute-api.us-east-1.amazonaws.com",
+      "region": "us-east-1",
+      "targetUrl": "https://example.com"
+    },
+    {
+      "name": "Gateway 2",
+      "url": "https://api-id-2.execute-api.us-west-2.amazonaws.com",
+      "region": "us-west-2",
+      "targetUrl": "https://example.com"
+    }
+  ],
+  "rotationSettings": {
+    "mode": "sequential",
+    "rotateEveryNRequests": 1,
+    "autoRotateOnError": true,
+    "rotationDelayMs": 0
+  },
+  "advancedSettings": {
+    "enableLogging": true,
+    "enableMetrics": true,
+    "bypassLocalhost": true,
+    "bypassPrivateIPs": true,
+    "customBypassList": [
+      "*.local",
+      "192.168.*",
+      "10.*"
+    ]
+  }
+}

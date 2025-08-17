@@ -1,0 +1,37 @@
+{
+  "name": "proxyforge-tests",
+  "version": "1.0.0",
+  "description": "Test suite for ProxyForge browser extension",
+  "type": "module",
+  "scripts": {
+    "test": "mocha *.test.js --reporter spec",
+    "test:unit": "mocha *.test.js --grep '^Unit:' --reporter spec",
+    "test:integration": "mocha *.test.js --grep '^Integration:' --reporter spec",
+    "test:watch": "mocha *.test.js --watch --reporter spec",
+    "test:coverage": "nyc --reporter=html --reporter=text mocha *.test.js",
+    "test:browser": "open test-runner.html"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "sinon": "^17.0.1",
+    "sinon-chrome": "^3.0.1",
+    "nyc": "^15.1.0",
+    "@types/chrome": "^0.0.251"
+  },
+  "nyc": {
+    "include": [
+      "extension/**/*.js"
+    ],
+    "exclude": [
+      "tests/**",
+      "extension/tests/**"
+    ],
+    "all": true,
+    "reporter": [
+      "html",
+      "text",
+      "lcov"
+    ]
+  }
+}

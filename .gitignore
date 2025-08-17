@@ -1,0 +1,140 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+.tox/
+.nox/
+.hypothesis/
+*.cover
+.py_cover
+htmlcov/
+.cache
+nosetests.xml
+coverage.xml
+*.log
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+.npm
+.yarn-integrity
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# AWS / Credentials
+.aws/
+*.pem
+*.key
+credentials
+aws_credentials.json
+
+# Proxy Rotator State
+proxy-rotator/state/*.json
+proxy-rotator/state/*.lock
+proxy-rotator/state/proxies.json
+proxy-rotator/state/temp/
+!proxy-rotator/state/.gitkeep
+
+# Extension Build
+extension/build/
+extension/dist/
+extension/*.zip
+extension/*.crx
+
+# Test Coverage
+extension/tests/coverage/
+extension/tests/.nyc_output/
+extension/tests/*.html
+!extension/tests/test-runner.html
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*~
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Documentation Build
+docs/_build/
+docs/.doctrees/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Claude
+.claude/cache/
+.claude/logs/
+
+# Security
+*.crt
+*.cer
+*.pfx
+secrets.json
+config.local.json

@@ -1,0 +1,63 @@
+# AWS Proxy Rotator Configuration Example
+# Copy this file to config.yaml and customize as needed
+
+# AWS Configuration
+aws:
+  regions:
+    - us-east-1
+    - us-west-2
+    - eu-west-1
+  profile: default  # AWS CLI profile to use
+  max_retries: 3
+  timeout: 30
+  max_gateways_per_region: 10
+  gateway_prefix: proxy_rotator
+  gateway_stage: proxyrotator
+
+# Proxy Server Configuration
+proxy_server:
+  host: 127.0.0.1
+  port: 8888
+  request_timeout: 10
+  connection_pool_size: 100
+  health_check_enabled: true
+  health_check_interval: 60
+
+# Management Server Configuration (for browser extension)
+management_server:
+  host: 127.0.0.1
+  port: 8889
+  cors_origins:
+    - chrome-extension://*
+    - http://localhost:*
+
+# Proxy Rotation Configuration
+rotation:
+  strategy: round-robin  # Options: round-robin, random, weighted
+  failover_enabled: true
+  cache_enabled: true
+  cache_ttl: 300
+
+# State Management
+state:
+  dir: ./state
+  file: api_proxies.json
+  backup_enabled: true
+  atomic_writes: true
+
+# Logging Configuration
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: ./state/proxy-rotator.log
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  max_size: 10485760  # 10MB
+  backup_count: 5
+
+# Security Configuration
+security:
+  rate_limit_enabled: true
+  rate_limit_requests: 100
+  rate_limit_window: 60
+  allowed_targets: []  # Empty list means all targets allowed
+  blocked_targets: []  # List of blocked target URLs
+  require_https: false
