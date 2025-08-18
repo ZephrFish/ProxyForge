@@ -67,13 +67,13 @@ def setup_proxy_rotator():
 
 def setup_extension_tests():
     """Setup extension test dependencies"""
-    print("\n🧪 Setting up extension tests...")
+    print("\nSetting up extension tests...")
     
     base_dir = Path(__file__).parent
     test_dir = base_dir / "extension" / "tests"
     
     if not test_dir.exists():
-        print("⚠️ Extension test directory not found, skipping")
+        print("Extension test directory not found, skipping")
         return True
     
     # Install Node.js dependencies
@@ -85,7 +85,7 @@ def setup_extension_tests():
 
 def create_config_file():
     """Create configuration file if it doesn't exist"""
-    print("\n⚙️ Setting up configuration...")
+    print("\n Setting up configuration...")
     
     base_dir = Path(__file__).parent
     proxy_dir = base_dir / "proxy-rotator"
@@ -99,7 +99,7 @@ def create_config_file():
     elif config_file.exists():
         print("[OK] Configuration file already exists")
     else:
-        print("⚠️ No configuration example found")
+        print(" No configuration example found")
     
     return True
 
@@ -121,7 +121,7 @@ def verify_setup():
         cmd = f"cd {test_dir} && npm test 2>/dev/null || echo 'Tests not configured'"
         run_command(cmd, "Testing extension test suite")
     
-    print("✅ Setup verification completed")
+    print("Setup verification completed")
     return True
 
 def print_next_steps():
@@ -130,7 +130,7 @@ def print_next_steps():
     print("ProxyForge Setup Complete!")
     print("="*60)
     
-    print("\n📋 Next Steps:")
+    print("\n Next Steps:")
     print("1. Configure AWS credentials:")
     print("   aws configure")
     
@@ -151,7 +151,7 @@ def print_next_steps():
     print("   - Click the extension icon to enable proxy")
     print("   - Visit https://httpbin.org/ip to see IP rotation")
     
-    print("\n📖 Documentation:")
+    print("\n Documentation:")
     print("   - README.md - Project overview")
     print("   - README_INTEGRATED.md - Detailed documentation")
     print("   - SETUP_GUIDE.md - Complete setup guide")
@@ -177,7 +177,7 @@ def main():
     
     for step in steps:
         if not step():
-            print(f"\n❌ Setup failed at step: {step.__name__}")
+            print(f"\n Setup failed at step: {step.__name__}")
             print("Please fix the issues above and run setup again.")
             sys.exit(1)
     
