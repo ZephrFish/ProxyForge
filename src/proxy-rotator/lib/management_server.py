@@ -333,19 +333,9 @@ class ProxyManagementServer:
         await runner.setup()
         site = web.TCPSite(runner, '127.0.0.1', self.management_port)
         
-        print(f"\nAWS Proxy Rotator Management Server")
-        print(f"=" * 50)
-        print(f"Management API: http://127.0.0.1:{self.management_port}")
+        print(f"\nManagement API: http://127.0.0.1:{self.management_port}")
         print(f"Proxy Server: http://127.0.0.1:{self.proxy_port}")
-        print(f"Browser Extension: Ready to connect")
-        print(f"=" * 50)
-        print(f"\nAPI Endpoints:")
-        print(f"  GET  /status         - Check server status")
-        print(f"  GET  /list-gateways  - List all gateways")
-        print(f"  POST /create-gateway - Create new gateway")
-        print(f"  POST /delete-gateway - Delete gateway")
-        print(f"  POST /rotate         - Force rotation")
-        print(f"\nServer is running. Press Ctrl+C to stop.\n")
+        print(f"Ready for browser extension. Press Ctrl+C to stop.\n")
         
         await site.start()
         
@@ -353,7 +343,7 @@ class ProxyManagementServer:
         try:
             await asyncio.Event().wait()
         except KeyboardInterrupt:
-            print("\n\nShutting down servers...")
+            print("\nShutting down...")
         finally:
             await runner.cleanup()
 
@@ -385,5 +375,5 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\nGoodbye!")
+        # Server stopped
         sys.exit(0)

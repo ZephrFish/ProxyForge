@@ -141,9 +141,7 @@ class SimpleHTTPProxy:
         self.load_proxy_endpoints()
         
         if not self.proxy_endpoints:
-            print("\nNo valid proxy endpoints found!")
-            print("Please create proxies first:")
-            print("  ./proxy-rotator create --url https://httpbin.org --regions us-east-1,us-west-2,eu-west-1")
+            print("\nNo proxies found. Run: ./proxy-rotator create --url <target>")
             return
         
         app = web.Application()
@@ -156,30 +154,15 @@ class SimpleHTTPProxy:
         site = web.TCPSite(runner, '127.0.0.1', self.port)
         await site.start()
         
-        print(f"\n{'='*60}")
-        print(f"AWS Proxy Rotator HTTP Proxy Started")
-        print(f"{'='*60}")
-        print(f"Proxy Address:   http://localhost:{self.port}")
-        print(f"Endpoints:       {len(self.proxy_endpoints)} API Gateways")
-        print(f"Rotation:        Round-robin (new IP each request)")
-        print(f"")
-        print(f"Configure your browser:")
-        print(f"  HTTP Proxy:    localhost:{self.port}")
-        print(f"  HTTPS Proxy:   localhost:{self.port} (limited support)")
-        print(f"")
-        print(f"Test with curl:")
-        print(f"  curl -x http://localhost:{self.port} http://httpbin.org/ip")
-        print(f"")
-        print(f"Note: This proxy works best with HTTP sites.")
-        print(f"For HTTPS, use the API Gateway URLs directly.")
-        print(f"")
-        print(f"Press Ctrl+C to stop")
-        print(f"{'='*60}\n")
+        print(f"\nProxy server started on localhost:{self.port}")
+        print(f"Active gateways: {len(self.proxy_endpoints)}")
+        print(f"Test: curl -x http://localhost:{self.port} http://httpbin.org/ip")
+        print(f"Press Ctrl+C to stop\n")
         
         try:
             await asyncio.Event().wait()
         except KeyboardInterrupt:
-            print("\nProxy stopped")
+            pass  # Server stopped
             await runner.cleanup()
 
 
@@ -193,7 +176,7 @@ def main():
     try:
         asyncio.run(proxy.start())
     except KeyboardInterrupt:
-        print("\nShutting down...")
+        pass  # Shutting down
 
 
 if __name__ == "__main__":

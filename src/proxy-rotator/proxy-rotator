@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-AWS Proxy Rotator - IP Rotation through AWS API Gateway
-Standalone tool for creating and managing rotating proxy endpoints
-"""
+"""AWS Proxy Rotator - Dynamic IP rotation through API Gateway"""
 
 import argparse
 import sys
@@ -47,13 +44,11 @@ class ProxyRotator:
         proxies = manager.create_proxy(target_url, regions=region_list)
         
         if proxies:
-            print(f"\n\033[92mCreated {len(proxies)} proxy endpoints:\033[0m\n")
+            print(f"\nCreated {len(proxies)} proxies:")
             for proxy in proxies:
-                print(f"  Region: {proxy['region']}")
-                print(f"  \033[92mProxy URL: {proxy['proxy_url']}\033[0m")
+                print(f"  {proxy['region']}: {proxy['proxy_url']}")
                 print(f"  Target: {proxy['target_url']}")
-                print(f"  API ID: {proxy['api_id']}\n")
-            print("Each request through these proxies will use a different IP address.")
+                print(f"  ID: {proxy['api_id']}")
         else:
             print("Failed to create proxies")
     
@@ -65,14 +60,11 @@ class ProxyRotator:
         proxies = manager.list_proxies(region)
         
         if proxies:
-            print(f"\n\033[92mAPI Gateway Proxies:\033[0m")
+            print(f"\nActive Proxies:")
             for proxy in proxies:
-                print(f"\n  [{proxy.get('created_at', 'Unknown')}]")
-                print(f"  Region: {proxy['region']}")
-                print(f"  API ID: {proxy['api_id']}")
-                print(f"  Name: {proxy['name']}")
-                print(f"  \033[92mProxy URL: {proxy['proxy_url']}\033[0m")
+                print(f"\n  {proxy['region']}: {proxy['proxy_url']}")
                 print(f"  Target: {proxy['target_url']}")
+                print(f"  ID: {proxy['api_id']}")
         else:
             print("No proxies found")
     
@@ -103,7 +95,7 @@ class ProxyRotator:
         try:
             asyncio.run(proxy.start())
         except KeyboardInterrupt:
-            print("\nProxy server stopped.")
+            pass  # Clean exit
     
     def start_server_with_management(self, proxy_port: int = 8888, management_port: int = 8889):
         """Start both proxy server and management API"""
@@ -119,8 +111,7 @@ class ProxyRotator:
         try:
             asyncio.run(server.start())
         except KeyboardInterrupt:
-            print("\n\nShutting down servers...")
-            print("Goodbye!")
+            pass  # Clean exit
     
     def test_proxies(self, url: Optional[str] = None):
         """Test proxy connectivity"""
@@ -131,14 +122,14 @@ class ProxyRotator:
         if url:
             working = manager.test_proxy(url)
             if working:
-                print(f"\033[92m[OK] Proxy {url} is working\033[0m")
+                print(f"[OK] {url}")
             else:
-                print(f"\033[91m[FAIL] Proxy {url} is not responding\033[0m")
+                print(f"[FAIL] {url}")
         else:
             proxies = manager.list_proxies()
             for proxy in proxies:
                 working = manager.test_proxy(proxy['proxy_url'])
-                status = "\033[92m[OK]\033[0m" if working else "\033[91m[FAIL]\033[0m"
+                status = "[OK]" if working else "[FAIL]"
                 print(f"{status} {proxy['proxy_url']} ({proxy['region']})")
 
 
@@ -203,34 +194,22 @@ def main():
         rotator.test_proxies(args.url)
     elif args.command == "examples":
         print("""
-AWS Proxy Rotator - Usage Examples
-===================================
+Examples:
 
-# Create proxies in multiple regions
-./proxy-rotator create --url https://httpbin.org --regions us-east-1,us-west-2,eu-west-1
+# Create proxies
+./proxy-rotator create --url https://httpbin.org --regions us-east-1,us-west-2
 
-# List all proxies
+# Start server for browser extension
+./proxy-rotator server
+
+# List proxies
 ./proxy-rotator list
 
-# Start local proxy server (basic)
-./proxy-rotator local --port 8080
-
-# Start proxy server with management API (for browser extension)
-./proxy-rotator server --proxy-port 8888 --management-port 8889
-
-# Configure browser
-Chrome: --proxy-server="http://localhost:8080"
-Firefox: Settings > Network > Manual proxy > localhost:8080
-ProxyForge Extension: Auto-connects to ports 8888/8889
-
-# Test proxies
+# Test connectivity
 ./proxy-rotator test
 
-# Delete all proxies
+# Delete all
 ./proxy-rotator delete --all
-
-# Delete specific proxy
-./proxy-rotator delete --api-id abc123 --region us-east-1
         """)
     else:
         parser.print_help()

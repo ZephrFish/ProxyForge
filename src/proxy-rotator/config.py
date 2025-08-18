@@ -93,7 +93,7 @@ class Config:
             # Merge with default config
             self._merge_config(self.config, file_config)
         except Exception as e:
-            print(f"Warning: Failed to load config from {config_path}: {e}")
+            pass  # Config file not found, use defaults
     
     def _load_env_variables(self) -> None:
         """Load configuration from environment variables"""
@@ -119,7 +119,7 @@ class Config:
                     converted_value = converter(value)
                     self._set_nested(self.config, config_path, converted_value)
                 except Exception as e:
-                    print(f"Warning: Failed to set {config_path} from {env_var}: {e}")
+                    pass  # Invalid env var value
     
     def _merge_config(self, base: Dict, override: Dict) -> None:
         """Recursively merge override config into base config"""
@@ -177,7 +177,7 @@ class Config:
             else:
                 raise ValueError(f"Unsupported config file format: {path.suffix}")
         except Exception as e:
-            print(f"Error saving config to {path}: {e}")
+            logger.error(f"Failed to save config: {e}")
 
 # Global config instance
 _config: Optional[Config] = None
